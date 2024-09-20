@@ -4,13 +4,44 @@ document.addEventListener("DOMContentLoaded" , () => {
     const cellSize = 20;
     let score = 0;
     let gameStarted = false;
-    let food = [{x: 300, y: 200}];
+    let food = {x: 300, y: 200};
     let snake = [{x: 160, y: 200},{x: 140, y: 200},{x: 120, y: 200}];
     let dx = cellSize
     let dy = 0;
 
+    function drawScoreBoard(){
+        const scoreBoard = document.getElementById('score-board');
+        scoreBoard.textContent = `Score : ${score}`;
+    }
+    
+    function drawDiv(x, y, className){
+        const div = document.createElement('div');
+        div.classList.add(className);
+        div.style.top = `${y}px`;
+        div.style.left = `${x}px`;
+        return div;
+    }
 
-    function startGame(){
+    function drawFoodAndSnake(){
+        gameArena.innerHTML = '';
+
+        const foodElement = drawDiv(food.x, food.y, 'food');
+        gameArena.appendChild(foodElement);
+    }
+
+    function gameLoop(){
+        setInterval(()=>{
+            drawScoreBoard();
+            drawFoodAndSnake();
+        },1000);
+    }
+
+    function runGame(){
+        gameStarted = true;
+        gameLoop();
+    }  
+
+    function initiateGame(){
         const scoreBoard = document.createElement('div');
         scoreBoard.id = 'score-board';
         document.body.insertBefore(scoreBoard, gameArena);
@@ -19,10 +50,15 @@ document.addEventListener("DOMContentLoaded" , () => {
         startButton.textContent = 'Start Game';
         startButton.classList.add('start-button');
         document.body.appendChild(startButton);
-        
+        console.log(score);
+
+        startButton.addEventListener('click' , ()=>{
+            startButton.style.display = 'none';
+            runGame();
+        });
     }
 
-    startGame();
+    initiateGame();
 
 
 
