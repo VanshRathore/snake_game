@@ -23,7 +23,13 @@ document.addEventListener("DOMContentLoaded" , () => {
     }
 
     function drawFoodAndSnake(){
-        gameArena.innerHTML = '';
+        gameArena.innerHTML = '';// remove everthing drawn previously
+        // and redraw with new coordinates when snake move
+
+        snake.forEach((snakeCell)=>{
+            const element = drawDiv(snakeCell.x, snakeCell.y, 'sanke');
+            gameArena.appendChild(element);
+        })
 
         const foodElement = drawDiv(food.x, food.y, 'food');
         gameArena.appendChild(foodElement);
