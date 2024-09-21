@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded" , () => {
     let snake = [{x: 160, y: 200},{x: 140, y: 200},{x: 120, y: 200}];
     let dx = cellSize
     let dy = 0;
+    let gameSpeed = 500;
+    let intervalId;
 
     function drawScoreBoard(){
         const scoreBoard = document.getElementById('score-board');
@@ -53,6 +55,12 @@ document.addEventListener("DOMContentLoaded" , () => {
         if(newHead.x == food.x && newHead.y == food.y){
             // collision
             //dont pop the element
+            console.log(gameSpeed);
+            if(gameSpeed > 30 ){
+                clearInterval(intervalId);
+                gameSpeed -= 10;
+                gameLoop();
+            }
             score += 5;
             // move food
             moveFood();
@@ -79,7 +87,8 @@ document.addEventListener("DOMContentLoaded" , () => {
     }
 
     function gameLoop(){
-        setInterval(()=>{
+        intervalId = setInterval(()=>{
+            console.log(gameSpeed);
             if(!gameStarted) return;
 
             if(isGameOver()){
@@ -91,7 +100,7 @@ document.addEventListener("DOMContentLoaded" , () => {
             updateSnake();
             drawScoreBoard();
             drawFoodAndSnake();
-        },500);
+        },gameSpeed);
     }
 
     function changeDirection(e){
