@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded" , () => {
     function moveFood(){
         let newX, newY;
         do{
-            newX = Math.floor(Math.random() * ((arenaSize - cellSize)/cellSize)*cellSize);
-            newY = Math.floor(Math.random() * ((arenaSize - cellSize)/cellSize)*cellSize);
+            newX = Math.floor(Math.random() * ((arenaSize - cellSize)/cellSize))*cellSize;
+            newY = Math.floor(Math.random() * ((arenaSize - cellSize)/cellSize))*cellSize;
         } while(snake.some(snakeCell => snakeCell.x == newX && snakeCell.y == newY));
 
         food = {x:newX, y: newY};
@@ -94,9 +94,36 @@ document.addEventListener("DOMContentLoaded" , () => {
         },500);
     }
 
+    function changeDirection(e){
+        console.log(e, e.keyCode);
+
+        const LEFT_KEY = 37;
+        const RIGHT_KEY = 39;
+        const UP_KEY = 38;
+        const DOWN_KEY = 40;
+
+        const keyPressed = e.keyCode;
+
+        const isGoingUp = dy == -cellSize;
+        const isGoingDown = dy == cellSize;
+        const isGoingLeft = dx == -cellSize;
+        const isGoingRight = dx == cellSize;
+
+        if(keyPressed == LEFT_KEY && !isGoingRight){ dy = 0; dx = -cellSize}
+
+        if(keyPressed == RIGHT_KEY && !isGoingLeft){dy = 0; dx = cellSize}
+
+        if(keyPressed == UP_KEY && !isGoingDown){dy = -cellSize; dx = 0}
+
+        if(keyPressed == DOWN_KEY && !isGoingUp){dy = cellSize; dx = 0}
+    }
+
     function runGame(){
-        gameStarted = true;
-        gameLoop();
+        if(!gameStarted){
+            gameStarted = true;
+            gameLoop();
+            document.addEventListener('keydown', changeDirection);
+        }
     }  
 
     function initiateGame(){
