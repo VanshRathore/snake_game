@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded" , () => {
     }
 
     function changeDirection(e){
+        e.preventDefault();
         console.log(e, e.keyCode);
 
         const LEFT_KEY = 37;
