@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded" , () => {
     let gameStarted = false;
     let food = {x: 300, y: 200};
     let snake = [{x: 160, y: 200},{x: 140, y: 200},{x: 120, y: 200}];
-    let dx = cellSize
+    let dx = cellSize;
     let dy = 0;
     let gameSpeed = 500;
     let intervalId;
